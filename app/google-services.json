@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "699330256298",
+    "firebase_url": "https://gerardtest-42be2-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "gerardtest-42be2",
+    "storage_bucket": "gerardtest-42be2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699330256298:android:154f3b2d1a66da9c489fd3",
+        "android_client_info": {
+          "package_name": "com.grup4.googleauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699330256298-psdvn6rjie6388cdvnvce8runvhim963.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgOFaSmQlkcdRYiXuq7T4W_4tR3eECNks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "699330256298-psdvn6rjie6388cdvnvce8runvhim963.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

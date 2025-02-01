@@ -1,4 +1,4 @@
-package com.grup4.googleauth
+package com.grup4.googleauth.presentation.screen
 
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -25,9 +25,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,12 +44,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialException
-import androidx.lifecycle.viewModelScope
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
@@ -59,13 +54,15 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
+import com.grup4.googleauth.R
 import com.grup4.googleauth.presentation.navigation.AppNavigation
+import com.grup4.googleauth.presentation.navigation.AppNavigationActivity
 import com.grup4.googleauth.ui.theme.GoogleAuthTheme
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.util.UUID
 
-class MainActivity : ComponentActivity() {
+class LoginScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -394,7 +391,7 @@ fun GoogleSignInButton() {
                 FirebaseAuth.getInstance().signInWithCredential(authCredential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            var intent = Intent(context, MainActivity::class.java)
+                            var intent = Intent(context, AppNavigationActivity::class.java)
                             intent.putExtra("email", task.result?.user?.email)
                             intent.putExtra("provider", "Google")
                             context.startActivity(intent, null)
@@ -420,4 +417,3 @@ fun GoogleSignInButton() {
         Text("Sign in with Google")
     }
 }
-
