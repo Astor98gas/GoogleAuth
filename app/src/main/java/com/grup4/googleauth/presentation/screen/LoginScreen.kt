@@ -1,13 +1,8 @@
 package com.grup4.googleauth.presentation.screen
 
 import android.content.ContentValues.TAG
-import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -47,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialException
+import androidx.navigation.NavController
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
@@ -56,44 +52,25 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import com.grup4.googleauth.R
 import com.grup4.googleauth.presentation.navigation.AppNavigation
-import com.grup4.googleauth.presentation.navigation.AppNavigationActivity
+import com.grup4.googleauth.presentation.viewModel.LoginViewModel
 import com.grup4.googleauth.ui.theme.GoogleAuthTheme
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.util.UUID
 
-class LoginScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            GoogleAuthTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        LoginEmail()
-                    }
-                }
-            }
-        }
-    }
-}
-
 @Preview(showBackground = true, name = "LoginEmailPreview")
 @Composable
 fun LoginEmailPreview() {
     GoogleAuthTheme {
-        LoginEmail()
+        LoginScreen(navController = NavController(LocalContext.current))
     }
 }
 
 @Composable
-fun LoginEmail() {
+fun LoginScreen(
+    navController: NavController,
+    viewModel: LoginViewModel = LoginViewModel()
+) {
     val showLoginForm = rememberSaveable {
         mutableStateOf(true)
     }
@@ -391,10 +368,6 @@ fun GoogleSignInButton() {
                 FirebaseAuth.getInstance().signInWithCredential(authCredential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            var intent = Intent(context, AppNavigationActivity::class.java)
-                            intent.putExtra("email", task.result?.user?.email)
-                            intent.putExtra("provider", "Google")
-                            context.startActivity(intent, null)
                         } else {
                             Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT)
                                 .show()
